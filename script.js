@@ -25,12 +25,29 @@ for (let i = 0; i < 16; i++) {
 
 //add event listener to the divs
 
+function randomColor(){
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 document.querySelectorAll(".square").forEach((item) => {
   item.addEventListener("mouseleave", () => {
-    console.log(item);
+    if (!(item.classList.contains("colored"))){
+      item.classList.add("colored")
+      item.style.backgroundColor = randomColor()
+    }
+    else{
+      let currentColor = window.getComputedStyle(item).backgroundColor;
+      let rgbValues = currentColor.match(/\d+/g).map(Number);
+      rgbValues = rgbValues.map(value => Math.min(255, value - 10));
+      item.style.backgroundColor = `rgb(${rgbValues[0]}, ${rgbValues[1]}, ${rgbValues[2]})`;
+    }
   });
 });
-//write hello world
 
-console.log("hello world");
-//write hello golamz
+
+
